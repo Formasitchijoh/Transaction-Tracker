@@ -12,4 +12,5 @@ RUN npm install
 
 COPY . .
 
-CMD ["npx", "ts-node", "app/index.ts"]
+CMD ["npx", "ts-node-dev", "--respawn", "app/index.ts"]
+

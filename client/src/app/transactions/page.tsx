@@ -6,7 +6,7 @@ import { API_BASE_URL } from "@/lib/api";
 async function getData(): Promise<Transaction[]> {
   try {
     // Wait for the response
-    const response = await fetch(`${API_BASE_URL}/transactions/`, {
+    const response = await fetch(`${API_BASE_URL}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

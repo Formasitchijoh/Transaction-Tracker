@@ -5,7 +5,7 @@ import cors from "cors";
 import { connectDB, sequelize} from "./db";
 import transactionRouter from "./routes";
 import path from 'path';
-import './jobs/scheduler'
+// import './jobs/scheduler'
 dotenv.config({
   path: path.resolve(__dirname, '../../.env'), // Adjust path if necessary
 });

@@ -2,7 +2,7 @@ FROM node:20
 
 EXPOSE 3001
 
-WORKDIR /server
+WORKDIR /app
 
 RUN npm install npm@latest -g 
 

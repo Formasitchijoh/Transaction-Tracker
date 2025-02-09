@@ -1,37 +1,4 @@
-# version: '3.8'
 
-# services: 
-#   server:
-#     container_name: server
-#     image: server:0.0.4
-#     build: 
-#       context: ./server   # 👈 Set the correct context (server directory)
-#       dockerfile: Dockerfile  # 👈 Explicitly specify Dockerfile (optional but recommended)
-#     ports:
-#       - "3001:3001"
-#     environment: 
-#       - EXTERNAL_PORT=3001
-#       - PGDATABASE=transac_db
-#       - PGUSER=formasit
-#       - PGPASSWORD=password123
-#       - PGHOST=postgres_db
-#     depends_on: 
-#       - postgres_db
-#     env_file:
-#       - ./.env  # Ensure this line is added here as well
-
-#   postgres_db: 
-#     container_name: postgres_db
-#     image: "postgres:latest"
-#     ports:
-#       - "5432:5432"
-#     volumes:
-#       - progresDB:/var/lib/postgresql/data
-#     env_file:
-#       - ./.env
-
-# volumes:
-#   progresDB: {}
 
 version: '3.8'
 
@@ -45,12 +12,12 @@ services:
     ports:
       - "3001:3001"
     environment: 
-      - EXTERNAL_PORT=3001
-      - DATABASE_URL=postgresql://formasit:mU1XwQR4vVMSmDfMmDB9zcZ9GrVNupaR@dpg-cujtefjv2p9s7386n380-a.oregon-postgres.render.com/transac_db
-      - PGDATABASE=transac_db
-      - PGUSER=formasit
-      - PGPASSWORD=mU1XwQR4vVMSmDfMmDB9zcZ9GrVNupaR
-      - PGHOST=dpg-cujtefjv2p9s7386n380-a.oregon-postgres.render.com
+      - EXTERNAL_PORT=${PORT}
+      - DATABASE_URL=${DATABASE_URL}
+      - PGDATABASE=${PGDATABASE}
+      - PGUSER=${PGUSER}
+      - PGPASSWORD=${PGPASSWORD}
+      - PGHOST=${PGHOST}
       - PGPORT=5432
     env_file:
       - ./.env

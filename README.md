@@ -1,30 +1,24 @@
-# Tracky
+# Tracky - Transaction Tracking System
 
-This Transaction Tracking System consists of three main components: a Scheduler, a REST API, and a Web Application. The Scheduler generates random transaction data every minute and communicates with the REST API to store these transactions. After a transaction is stored, the Scheduler updates its confirmed status 10 seconds later. The REST API provides the interface for creating, storing, and retrieving transactions. The Web Application, a single-page app, allows users to view all stored transactions, search by various parameters (such as ID, value, sender, and receiver), and view detailed transaction information. This system provides a complete solution for simulating and managing financial transactions.
-## Getting Started
+Tracky is a transaction tracking system composed of three core components:
 
-After cloning the repository, follow these steps to set up the project on your local machine.
+1. **Scheduler** – Generates random transaction data every minute and communicates with the REST API to store these transactions. After a transaction is stored, the Scheduler updates its confirmed status 10 seconds later.
+2. **REST API** – Provides endpoints for creating, storing, and retrieving transaction data.
+3. **Web Application** – A single-page application (SPA) that allows users to:
+   - View all stored transactions.
+   - Search transactions using parameters such as ID, value, sender, and receiver.
+   - Access detailed transaction information.
 
-### 1. Install Dependencies
+This system provides a complete solution for simulating and managing financial transactions.
 
-Change into the `transactify` folder and then install dependencies in both the **server** and **client** directories.
+---
 
-#### Server
+## 🚀 Getting Started
 
-```bash
-cd transactify/server
-npm install
-# or
-yarn install
-# or
-pnpm install
+Follow the steps below to set up the project on your local machine.
 
-#### Client
+### 1️⃣ Clone the Repository
 
-```bash
-cd transactify/client
-npm install
-# or
-yarn install
-# or
-pnpm install
+```sh
+git clone https://github.com/your-username/tracky.git
+cd tracky

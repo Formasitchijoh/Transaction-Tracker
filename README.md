@@ -2,9 +2,9 @@
 
 Tracky is a transaction tracking system composed of three core components:
 
-1. **Scheduler** – Generates random transaction data every minute and communicates with the REST API to store these transactions. After a transaction is stored, the Scheduler updates its confirmed status 10 seconds later.
-2. **REST API** – Provides endpoints for creating, storing, and retrieving transaction data.
-3. **Web Application** – A single-page application (SPA) that allows users to:
+1. **REST API** – Provides endpoints for creating, storing, and retrieving transaction data.
+2. **Scheduler** – Generates random transaction data every minute and communicates with the REST API to store these transactions. After a transaction is stored, the Scheduler updates its confirmed status 10 seconds later.
+3. **Web Application** – A single-page application (SPA) built with **Next.js** that allows users to:
    - View all stored transactions.
    - Search transactions using parameters such as ID, value, sender, and receiver.
    - Access detailed transaction information.
@@ -21,7 +21,7 @@ Follow the steps below to set up the project on your local machine.
 
 ```sh
 git clone https://github.com/your-username/tracky.git
-cd tracky
+cd transactify
 
 # Install Server Dependencies
 cd server
@@ -40,23 +40,12 @@ You can run Tracky using either local development mode or Docker.
 
 ### 🔹 Running Locally
 
-#### Start the Server
-
-```sh
-cd tracky/server
-npm start  # or yarn start, pnpm start
-```
-
+#### Start the Express Server
 ### 🔹 Running with Docker
 
-#### Build the Docker Containers
+#### Build the Docker Containers and Start in Detached Mode
 
 ```sh
-docker-compose build
-```
-
-#### Start the Containers
-
-```sh
-docker-compose up
+docker-compose up  -d
+docker-compose up --build
 ```

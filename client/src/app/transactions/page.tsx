@@ -6,7 +6,6 @@ import io from "socket.io-client";
 import { useState, useEffect } from "react";
 
 const socket = io(API_BASE_URL); // Connect to your backend
-// const socket = io("http://localhost:3001");
 
 const getData = async (): Promise<Transaction[]> => {
   try {

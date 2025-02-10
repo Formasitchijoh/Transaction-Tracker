@@ -3,6 +3,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, Trash2, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ArrowUpDown } from "lucide-react"
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,16 +26,37 @@ export type Transaction = {
 export const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "sender",
-    header: "Sender",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+         Sender
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
+  
 
   {
     accessorKey: "receiver",
-    header: "receiver",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+         Receiver
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "value",
-    header: () => <div className="text-right">Amount</div>,
+    header: () => <div className="">Amount</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("value"));
       const formatted = new Intl.NumberFormat("en-US", {
@@ -41,7 +64,7 @@ export const columns: ColumnDef<Transaction>[] = [
         currency: "USD",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="font-medium">{formatted}</div>;
     },
   },
   {
@@ -50,7 +73,13 @@ export const columns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "timestamp",
-    header: "Time",
+    header: "Date",
+    cell: ({ row }) => {
+      const date = parseInt(row.getValue("timestamp"));
+      const formattedDate = new Date(Number(date)).toLocaleString()
+
+      return <div className="font-medium">{formattedDate.slice(0,9)}</div>;
+    },
   },
   {
     id: "actions",

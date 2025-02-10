@@ -10,9 +10,18 @@ import {
   getPaginationRowModel,
   ColumnFiltersState,
   getFilteredRowModel,
+  SortingState,
+  getSortedRowModel,
 
 } from "@tanstack/react-table"
+import { ChevronDown} from "lucide-react"
 
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import {
   Table,
   TableBody,
@@ -33,7 +42,7 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-
+  const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const router = useRouter()
 
@@ -45,7 +54,10 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     state: {
+        sorting,
         columnFilters,
       },
 
@@ -62,6 +74,30 @@ export function DataTable<TData, TValue>({
         }
         className="max-w-sm"
     />
+            <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto">
+              Dates <ChevronDown />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {
+              ['January', 'February','October', 'November', 'December'].map((column, index) => {
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={index}
+                    className="capitalize"
+                    // checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                     console.log(value)
+                    }
+                  >
+                    {column}
+                  </DropdownMenuCheckboxItem>
+                )
+              })}
+          </DropdownMenuContent>
+        </DropdownMenu>
     </div>
     <div className="rounded-md border">
       <Table>
@@ -89,7 +125,9 @@ export function DataTable<TData, TValue>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
-                onClick={() => router.push(`/transactions/${row.id}`)}
+                onClick={() => {                  
+                  router.push(`/transactions/${row.original?.id}`);
+                }}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>

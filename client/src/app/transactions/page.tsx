@@ -38,6 +38,7 @@ export const getData = async (): Promise<Transaction[]> => {
 
 const TransactionPage = () => {
   const [data, setData] = useState<Transaction[]>([]);
+  const [loading, setLoading] = useState(false)
   const [fetchTransactions, setFetchTransactions] = useState(false)
 
   useEffect(() => { 
@@ -61,15 +62,16 @@ const TransactionPage = () => {
 
   
   useEffect(() => {
+    setLoading(true)
     getData().then((result) => setData(result));
-    console.log("Data updated and  fetched successfully", data);
     setFetchTransactions(false);
+    setLoading(false)
 
   }, [fetchTransactions]);
 
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
+      <DataTable loading columns={columns} data={data} />
     </div>
   );
 };

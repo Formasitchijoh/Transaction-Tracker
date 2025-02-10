@@ -23,7 +23,7 @@ export type Transaction = {
   sender: string;
 };
 
-const handleDeleteTransaction = async (transactionId: string) => {
+export const handleDeleteTransaction = async (transactionId: string) => {
   try {
     const response = await fetch(
       `${API_BASE_URL}/api/transactions/${transactionId}`,
@@ -47,7 +47,7 @@ const handleDeleteTransaction = async (transactionId: string) => {
    alert("Error deleting transaction");
   }
 };
-const ConfirmTransaction = async (transactionId: string) => {
+export const confirmTransaction = async (transactionId: string) => {
   try {
     const response = await fetch(
       `${API_BASE_URL}/api/transactions/${transactionId}`,
@@ -144,15 +144,20 @@ export const columns: ColumnDef<Transaction>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            {
+              transaction.confirmed !== true &&  (
             <DropdownMenuItem
               onClick={() => {
                 // navigator.clipboard.writeText(transaction.id)
-                ConfirmTransaction(transaction.id)
+                console.log(transaction);
+                confirmTransaction(transaction.id)
               }}
             >
               <Edit size={18} />
               Confirm
             </DropdownMenuItem>
+              )
+            }
             <DropdownMenuSeparator />
             <DropdownMenuItem 
             onClick={() => {

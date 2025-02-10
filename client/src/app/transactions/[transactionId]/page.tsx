@@ -4,20 +4,25 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Transaction } from "../columns";
 import { API_BASE_URL } from "@/lib/api";
-
+import { useRouter } from "next/navigation";
+import { handleDeleteTransaction, confirmTransaction } from "../columns";
 const TransactionDetails = () => {
   const [transaction, setTransaction] = useState<Transaction>();
   const params = useParams();
   const transactionId = params.transactionId as string;
+  const router = useRouter();
 
   useEffect(() => {
     const fetchTransaction = async () => {
-      const response = await fetch(`${API_BASE_URL}/api/transactions/${transactionId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/api/transactions/${transactionId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error(
           `Failed to fetch data: ${response.status} ${response.statusText}`
@@ -75,10 +80,22 @@ const TransactionDetails = () => {
 
           {/* Action Buttons */}
           <div className="flex justify-between mt-6">
-            <button className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition">
-              ✏️ Edit
-            </button>
-            <button className="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition">
+            {transaction.confirmed !== true && (
+              <button
+                onClick={() => confirmTransaction(transaction.id)}
+                className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition"
+              >
+                ✏️ Edit
+              </button>
+            )}
+
+            <button
+              onClick={() => {
+                handleDeleteTransaction(transaction.id);
+                router.push("/");
+              }}
+              className="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition"
+            >
               🗑️ Delete
             </button>
           </div>

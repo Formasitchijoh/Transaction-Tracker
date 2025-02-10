@@ -60,7 +60,7 @@ export const updateTransactionController = async (
       status: "success",
       data: { data},
     });
-    io.emit("transaction-created", data?.data?.transaction.id);
+    io.emit("transaction-created", transactionId);
     
   } catch (error: any) {
     res.status(500).json({

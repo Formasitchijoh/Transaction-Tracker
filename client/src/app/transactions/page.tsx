@@ -5,7 +5,10 @@ import { API_BASE_URL } from "@/lib/api";
 import io from "socket.io-client";
 import { useState, useEffect } from "react";
 
-const socket = io(API_BASE_URL); // Connect to your backend
+const socket = io(API_BASE_URL, {
+  withCredentials: true, // Allow cross-origin requests with credentials
+  transports: ['websocket', 'polling'], // Ensure WebSocket connection works
+});
 
 const getData = async (): Promise<Transaction[]> => {
   try {

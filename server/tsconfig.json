@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
+    "types": ["jest"],
+    "paths": {
+      "@models/*": ["./app/models/*"]
+    },
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
     /* Projects */
@@ -110,8 +114,8 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "include": [
-    "src/swagger-output.json",
-    "src/**/*"
+   "app/**/*",
+   "tests/**/*.test.ts"
   ],
   "exclude": [
     "node_modules"

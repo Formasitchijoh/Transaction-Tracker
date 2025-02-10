@@ -69,10 +69,8 @@ docker-compose up --build
 Once the server is running, you can access the Swagger documentation by navigating to:
 
 ```
-http://localhost:PORT/api-docs
+http://localhost:3001/api-docs
 ```
-
-Replace `PORT` with the port number your Express server is running on (by default, it might be `3000` or `5000` depending on your configuration).
 
 The Swagger UI will provide an interactive view of all available API endpoints, their parameters, and responses.
 

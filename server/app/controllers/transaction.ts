@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import TransactionModel from "../models/transaction";
 import { CreateTransactionInput, UpdateTransactionInput, ParamsInput, FilterQueryInput } from "../utils/transaction.schema";
-
+import { io } from "../utils/socket";
 export const createTransactionController = async (
   req: Request<{}, {}, CreateTransactionInput>,
   res: Response
@@ -54,12 +54,14 @@ export const updateTransactionController = async (
       });
     }
 
-    const transaction = await TransactionModel.findByPk(transactionId);
+    const data = await TransactionModel.findByPk(transactionId);
 
     res.status(200).json({
       status: "success",
-      data: { transaction },
+      data: { data},
     });
+    io.emit("transaction-created", data?.data?.transaction.id);
+    
   } catch (error: any) {
     res.status(500).json({
       status: "error",
@@ -143,6 +145,7 @@ export const updateTransactionController = async (
       }
   
       res.status(204).send(); // No content response
+      io.emit("transaction-updated", req.params.transactionId );
     } catch (error: any) {
       res.status(500).json({
         status: "error",

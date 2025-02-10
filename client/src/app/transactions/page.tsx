@@ -10,7 +10,7 @@ const socket = io(API_BASE_URL, {
   transports: ['websocket', 'polling'], // Ensure WebSocket connection works
 });
 
-const getData = async (): Promise<Transaction[]> => {
+export const getData = async (): Promise<Transaction[]> => {
   try {
     // Wait for the response
     const response = await fetch(`${API_BASE_URL}/api/transactions`, {
@@ -44,13 +44,13 @@ const TransactionPage = () => {
     // Listen for transaction creation
     socket.on("transaction-created", (transactionId) => {
       setFetchTransactions(true);
-      console.log(`Transaction created 111111: ${transactionId}`);
+      console.log(`Transaction created: ${transactionId}`);
       
     });
     // Listen for transaction updates
     socket.on("transaction-updated", (transactionId) => {
       setFetchTransactions(true);
-      console.log(`Transaction created 333333: ${transactionId}`);
+      console.log(`Transaction created : ${transactionId}`);
     });
 
     return () => {

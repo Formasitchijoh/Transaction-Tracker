@@ -3,8 +3,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, Trash2, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react"
-
+import { ArrowUpDown } from "lucide-react";
+import { API_BASE_URL } from "@/lib/api";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,6 +23,56 @@ export type Transaction = {
   sender: string;
 };
 
+const handleDeleteTransaction = async (transactionId: string) => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/api/transactions/${transactionId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch data: ${response.status} ${response.statusText}`
+      );
+    }
+    alert("Transaction deleted successfully");
+
+    // Parse JSON response
+  } catch (error) {
+    console.error("Error fetching transactions:", error);
+   alert("Error deleting transaction");
+  }
+};
+const ConfirmTransaction = async (transactionId: string) => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/api/transactions/${transactionId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ confirmed: true }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch data: ${response.status} ${response.statusText}`
+      );
+    }
+    alert("Transaction Updated successfully");
+
+    // Parse JSON response
+  } catch (error) {
+    console.error("Error fetching transactions:", error);
+   alert("Error Updating transaction");
+  }
+};
+
 export const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "sender",
@@ -32,13 +82,12 @@ export const columns: ColumnDef<Transaction>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-         Sender
+          Sender
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
   },
-  
 
   {
     accessorKey: "receiver",
@@ -48,10 +97,10 @@ export const columns: ColumnDef<Transaction>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-         Receiver
+          Receiver
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
   },
   {
@@ -76,15 +125,15 @@ export const columns: ColumnDef<Transaction>[] = [
     header: "Date",
     cell: ({ row }) => {
       const date = parseInt(row.getValue("timestamp"));
-      const formattedDate = new Date(Number(date)).toLocaleString()
+      const formattedDate = new Date(Number(date)).toLocaleString();
 
-      return <div className="font-medium">{formattedDate.slice(0,9)}</div>;
+      return <div className="font-medium">{formattedDate.slice(0, 9)}</div>;
     },
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const transaction = row.original;
 
       return (
         <DropdownMenu>
@@ -96,13 +145,21 @@ export const columns: ColumnDef<Transaction>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() => {
+                // navigator.clipboard.writeText(transaction.id)
+                ConfirmTransaction(transaction.id)
+              }}
             >
               <Edit size={18} />
-              Edit
+              Confirm
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-red-500 font-bold flex items-center gap-2">
+            <DropdownMenuItem 
+            onClick={() => {
+              // navigator.clipboard.writeText(transaction.id)
+              handleDeleteTransaction(transaction.id)
+            }}
+            className="text-red-500 font-bold flex items-center gap-2">
               <Trash2 size={18} />
               Delete
             </DropdownMenuItem>{" "}

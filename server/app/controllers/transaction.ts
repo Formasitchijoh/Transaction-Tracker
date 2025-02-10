@@ -103,7 +103,7 @@ export const updateTransactionController = async (
   ): Promise<void> => {
     try {
       const page = req.query.page || 1;
-      const limit = req.query.limit || 10;
+      const limit = req.query.limit || 100;
       const offset = (page - 1) * limit;
   
       const transactions = await TransactionModel.findAll({

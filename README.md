@@ -17,8 +17,18 @@ This system provides a complete solution for simulating and managing financial t
 
 Follow the steps below to set up the project on your local machine.
 
-### 1️⃣ Clone the Repository
+### 1️⃣ Clone the Repository & Install Dependencies
 
 ```sh
 git clone https://github.com/your-username/tracky.git
 cd tracky
+
+# Install Server Dependencies
+cd server
+npm install  # or yarn install, pnpm install
+cd ..
+
+# Install Client Dependencies
+cd client
+npm install  # or yarn install, pnpm install
+cd ..

@@ -13,7 +13,7 @@ import { swaggerOptions } from "./utils/swagger.config";
 import { app, io } from "./utils/socket";
 
 // Import scheduler AFTER io is defined to avoid circular dependency
-// import "./jobs/scheduler";
+import "./jobs/scheduler";
 
 const PORT = process.env.PORT || 8000;
 

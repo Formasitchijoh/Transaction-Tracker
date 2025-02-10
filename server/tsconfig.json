@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "types": ["jest"],
+    "types": ["mocha", "node"],
     "paths": {
       "@models/*": ["./app/models/*"]
     },

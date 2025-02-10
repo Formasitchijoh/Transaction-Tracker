@@ -10,23 +10,21 @@ const PORT = process.env.PORT || 8000;
 
 export const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:3000", "https://transaction-tracker-liard.vercel.app/"],
+    origin: ["http://localhost:3000", "https://transaction-tracker-liard.vercel.app"], // Removed the trailing slash
     methods: ["GET", "POST", "PUT", "DELETE", 'PATCH'],
   },
 });
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://transaction-tracker-liard.vercel.app/"],
+    origin: ["http://localhost:3000", "https://transaction-tracker-liard.vercel.app"], // Removed the trailing slash
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", 'PATCH'],
   })
 );
 
-
 // Start server and connect to database 
-
-if(process.env.NODE_ENV !== 'test'){
+if (process.env.NODE_ENV !== 'test') {
   server.listen(PORT, async () => {
     console.log(`✅ Server running on port ${PORT}`);
     console.log("🚀 Server started successfully");

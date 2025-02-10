@@ -57,11 +57,11 @@ const TransactionPage = () => {
       socket.off("transaction-created");
       socket.off("transaction-updated");
     };
-  }, [socket]);
+  }, []);
 
   
   useEffect(() => {
-    getData().then((data) => setData(data));
+    getData().then((result) => setData(result));
     console.log("Data updated and  fetched successfully", data);
     setFetchTransactions(false);
 

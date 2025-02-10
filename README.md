@@ -22,6 +22,7 @@ Follow the steps below to set up the project on your local machine.
 ```sh
 git clone https://github.com/your-username/tracky.git
 cd tracky
+``` sh
 
 # Install Server Dependencies
 cd server

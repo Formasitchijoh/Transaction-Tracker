@@ -32,3 +32,14 @@ cd ..
 cd client
 npm install  # or yarn install, pnpm install
 cd ..
+
+### 🛠 Running the Application
+
+You can run Tracky using either local development mode or Docker.
+
+### 🔹 Running Locally
+
+#### Start the Server
+```sh
+cd tracky/server
+npm start  # or yarn start, pnpm start

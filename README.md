@@ -1,7 +1,6 @@
-# Transactify
+# Tracky
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app). The project is split into two parts: a client and a server.
-
+This Transaction Tracking System consists of three main components: a Scheduler, a REST API, and a Web Application. The Scheduler generates random transaction data every minute and communicates with the REST API to store these transactions. After a transaction is stored, the Scheduler updates its confirmed status 10 seconds later. The REST API provides the interface for creating, storing, and retrieving transactions. The Web Application, a single-page app, allows users to view all stored transactions, search by various parameters (such as ID, value, sender, and receiver), and view detailed transaction information. This system provides a complete solution for simulating and managing financial transactions.
 ## Getting Started
 
 After cloning the repository, follow these steps to set up the project on your local machine.

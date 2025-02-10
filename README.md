@@ -18,16 +18,4 @@ npm install
 yarn install
 # or
 pnpm install
-.
 
-
-cd ../client
-npm install
-# or
-yarn install
-# or
-pnpm install
-
-
-docker-compose up -d
-docker-compose up --build

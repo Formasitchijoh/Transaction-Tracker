@@ -19,3 +19,12 @@ yarn install
 # or
 pnpm install
 
+#### Client
+
+```bash
+cd transactify/client
+npm install
+# or
+yarn install
+# or
+pnpm install

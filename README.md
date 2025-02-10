@@ -22,7 +22,6 @@ Follow the steps below to set up the project on your local machine.
 ```sh
 git clone https://github.com/your-username/tracky.git
 cd tracky
-``` sh
 
 # Install Server Dependencies
 cd server
@@ -33,6 +32,7 @@ cd ..
 cd client
 npm install  # or yarn install, pnpm install
 cd ..
+```
 
 ### 🛠 Running the Application
 
@@ -41,6 +41,22 @@ You can run Tracky using either local development mode or Docker.
 ### 🔹 Running Locally
 
 #### Start the Server
+
 ```sh
 cd tracky/server
 npm start  # or yarn start, pnpm start
+```
+
+### 🔹 Running with Docker
+
+#### Build the Docker Containers
+
+```sh
+docker-compose build
+```
+
+#### Start the Containers
+
+```sh
+docker-compose up
+```

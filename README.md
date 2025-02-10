@@ -20,7 +20,7 @@ Follow the steps below to set up the project on your local machine.
 ### 1️⃣ Clone the Repository & Install Dependencies
 
 ```sh
-git clone https://github.com/your-username/tracky.git
+git clone https://github.com/Formasitchijoh/Transaction-Tracker.git
 cd tracky
 
 # Install Server Dependencies
@@ -43,15 +43,18 @@ You can run Tracky using either local development mode or Docker.
 #### Start the Express Server
 
 ```sh
-cd tracky/server
-npm run dev  # or yarn dev, pnpm dev
+cd transactify/server
+npx ts-node app/index.ts 
+The local server is found at http://localhost:3001/api/transactions
+
 ```
 
 #### Start the Next.js Client
 
 ```sh
-cd tracky/client
+cd transactify/client
 npm run dev  # or yarn dev, pnpm dev
+The local server is found at http://localhost:3000
 ```
 
 ### 🔹 Running with Docker

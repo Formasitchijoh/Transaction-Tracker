@@ -22,19 +22,19 @@ services:
     env_file:
       - ./.env
 
-  client:
-    container_name: client
-    image: client:0.0.4
-    build:
-      context: ./client  # Path to your client folder
-      dockerfile: Dockerfile  # Optionally, specify the Dockerfile (if named differently)
-    ports:
-      - "3000:3000"  # Expose the port the client is running on
-    depends_on:
-      - server  # Ensure that the server is up before starting the client
-    environment:
-      - NEXT_PUBLIC_API_URL=http://server:3001  # Point to the server container
-    env_file:
-      - ./.env  # Load the root .env file
-    volumes:
-      - ./client:/client
+  # client:
+  #   container_name: client
+  #   image: client:0.0.4
+  #   build:
+  #     context: ./client  # Path to your client folder
+  #     dockerfile: Dockerfile  # Optionally, specify the Dockerfile (if named differently)
+  #   ports:
+  #     - "3000:3000"  # Expose the port the client is running on
+  #   depends_on:
+  #     - server  # Ensure that the server is up before starting the client
+  #   environment:
+  #     - NEXT_PUBLIC_API_URL=http://server:3001  # Point to the server container
+  #   env_file:
+  #     - ./.env  # Load the root .env file
+  #   # volumes:
+  #   #   - ./client:/client

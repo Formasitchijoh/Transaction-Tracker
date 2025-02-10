@@ -1,43 +1,75 @@
-
-
+"use client";
 import { Transaction, columns } from "./columns";
 import { DataTable } from "./data-table";
 import { API_BASE_URL } from "@/lib/api";
-async function getData(): Promise<Transaction[]> {
+import io from "socket.io-client";
+import { useState, useEffect } from "react";
+
+const socket = io(API_BASE_URL); // Connect to your backend
+// const socket = io("http://localhost:3001");
+
+const getData = async (): Promise<Transaction[]> => {
   try {
     // Wait for the response
-    const response = await fetch(`${API_BASE_URL}`, {
+    const response = await fetch(`${API_BASE_URL}/api/transactions`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
 
-    // If response is not ok, throw an error
     if (!response.ok) {
-      throw new Error(`Failed to fetch data: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `Failed to fetch data: ${response.status} ${response.statusText}`
+      );
     }
 
-    // Parse JSON response
     const result = await response.json();
-    const data: Transaction[] = result.transactions
-    console.log("Fetched data:", data
-    );
-    
+    const data: Transaction[] = result.transactions;
+
     return data;
   } catch (error) {
     console.error("Error fetching transactions:", error);
     return []; // Return empty array in case of error
   }
-}
+};
 
-export default async function TransactionPage() {
-  const data = await getData();
+const TransactionPage = () => {
+  const [data, setData] = useState<Transaction[]>([]);
+  const [fetchTransactions, setFetchTransactions] = useState(false)
+
+  useEffect(() => { 
+    // Listen for transaction creation
+    socket.on("transaction-created", (transactionId) => {
+      setFetchTransactions(true);
+      console.log(`Transaction created 111111: ${transactionId}`);
+      
+    });
+    // Listen for transaction updates
+    socket.on("transaction-updated", (transactionId) => {
+      setFetchTransactions(true);
+      console.log(`Transaction created 333333: ${transactionId}`);
+    });
+
+    return () => {
+      socket.off("transaction-created");
+      socket.off("transaction-updated");
+    };
+  }, [socket]);
+
+  
+  useEffect(() => {
+    getData().then((data) => setData(data));
+    console.log("Data updated and  fetched successfully", data);
+    setFetchTransactions(false);
+
+  }, [fetchTransactions]);
 
   return (
     <div className="container mx-auto py-10">
       <DataTable columns={columns} data={data} />
     </div>
   );
-}
+};
 
+export default TransactionPage;

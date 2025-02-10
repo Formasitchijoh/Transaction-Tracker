@@ -7,12 +7,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  //   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 // This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 export type Transaction = {
   id: string;
   value: number;
@@ -70,12 +69,12 @@ export const columns: ColumnDef<Transaction>[] = [
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
             >
-              <Edit size={18} /> {/* Delete icon */}
+              <Edit size={18} />
               Edit
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-red-500 font-bold flex items-center gap-2">
-              <Trash2 size={18} /> {/* Delete icon */}
+              <Trash2 size={18} />
               Delete
             </DropdownMenuItem>{" "}
           </DropdownMenuContent>

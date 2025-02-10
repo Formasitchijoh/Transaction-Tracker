@@ -1,4 +1,5 @@
 import TransactionPage from "./transactions/page";
+
 export default function Home() {
   return (
       <main className="flex">

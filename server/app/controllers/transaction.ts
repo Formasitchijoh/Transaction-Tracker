@@ -36,9 +36,6 @@ export const updateTransactionController = async (
   res: Response
 ): Promise<any> => {
   try {
-    console.log("Params:", req.params);
-    console.log("Body:", req.body);
-
     const { transactionId } = req.params;
     
     if (!transactionId) {
@@ -108,9 +105,12 @@ export const updateTransactionController = async (
       const page = req.query.page || 1;
       const limit = req.query.limit || 10;
       const offset = (page - 1) * limit;
-      console.log(req.body);
-
-      const transactions = await TransactionModel.findAll({ limit, offset });
+  
+      const transactions = await TransactionModel.findAll({
+        limit,
+        offset,
+        order: [['createdAt', 'DESC']], // Order by the 'createdAt' field in descending order
+      });
   
       res.status(200).json({
         status: "success",
@@ -124,7 +124,7 @@ export const updateTransactionController = async (
       });
     }
   };
-
+  
   export const deleteTransactionController = async (
     req: Request<ParamsInput>,
     res: Response

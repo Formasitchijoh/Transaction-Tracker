@@ -3,9 +3,9 @@ import { Sequelize, DataTypes } from "sequelize";
 
 const POSTGRES_URL = process.env.DATABASE_URL as unknown as string;
 const sequelize = new Sequelize(POSTGRES_URL, {
-    dialect: "postgres", // ✅ Add this line to specify PostgreSQL as the database dialect
-    logging: false, // Optional: Disable logging
-    host: 'postgres_db',  // this should match the service name in docker-compose.yml
+    dialect: "postgres",
+    logging: false,
+    host: 'postgres_db',
     username: 'formasit',
     password: 'password123',
     database: 'transac_db',

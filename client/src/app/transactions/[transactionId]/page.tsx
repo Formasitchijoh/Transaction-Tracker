@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Transaction } from "../columns";
 import { API_BASE_URL } from "@/lib/api";
+
 const TransactionDetails = () => {
   const [transaction, setTransaction] = useState<Transaction>();
   const params = useParams();
@@ -11,23 +12,20 @@ const TransactionDetails = () => {
 
   useEffect(() => {
     const fetchTransaction = async () => {
-      const response = await fetch(`${API_BASE_URL}/${transactionId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    // If response is not ok, throw an error
-    if (!response.ok) {
-        throw new Error(`Failed to fetch data: ${response.status} ${response.statusText}`);
+      const response = await fetch(`${API_BASE_URL}/api/transactions/${transactionId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch data: ${response.status} ${response.statusText}`
+        );
       }
 
-    // Parse JSON response
-    const data = await response.json();
-    console.log("Fetched data:", data.data.transaction
-    );
+      // Parse JSON response
+      const data = await response.json();
       setTransaction(data.data.transaction);
     };
 
@@ -39,7 +37,7 @@ const TransactionDetails = () => {
       <h2 className="text-2xl font-bold text-gray-800 mb-4">
         Transaction Details
       </h2>
-  
+
       {transaction ? (
         <div className="w-full max-w-lg bg-gray-100 p-6 rounded-lg">
           <p className="text-lg">
@@ -56,7 +54,9 @@ const TransactionDetails = () => {
           </p>
           <p className="text-lg">
             <span className="font-semibold text-gray-700">Value:</span>{" "}
-            <span className="text-blue-700 font-bold">${transaction.value}</span>
+            <span className="text-blue-700 font-bold">
+              ${transaction.value}
+            </span>
           </p>
           <p className="text-lg">
             <span className="font-semibold text-gray-700">Timestamp:</span>{" "}
@@ -72,7 +72,7 @@ const TransactionDetails = () => {
               <span className="text-red-600 font-bold">Pending ⏳</span>
             )}
           </p>
-  
+
           {/* Action Buttons */}
           <div className="flex justify-between mt-6">
             <button className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition">
@@ -88,8 +88,6 @@ const TransactionDetails = () => {
       )}
     </div>
   );
-  
-  
 };
 
 export default TransactionDetails;

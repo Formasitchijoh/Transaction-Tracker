@@ -13,6 +13,7 @@ async function createAndUpdateTransaction() {
       // After 10 seconds, confirm the transaction
       setTimeout(() => updateTransactionConfirmation(transactionId), 10000);
     }
+
   } catch (error) {
     console.error('Error in transaction creation and update:', error);
   }

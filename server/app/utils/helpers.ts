@@ -1,3 +1,4 @@
+import { io } from "./socket";
 export interface Transaction {
     value: number;
     timestamp: number;
@@ -9,7 +10,7 @@ export interface Transaction {
   // Function to generate random transaction data
   export function generateRandomTransaction(): Transaction {
     const values = ['completed', 'pending', 'failed'];
-    const randomValue = Math.floor(Math.random() * 1000); // Random value between 0 and 1000
+    const randomValue = Math.floor(Math.random() * 10000); // Random value between 0 and 10000
     const randomStatus = values[Math.floor(Math.random() * values.length)];
   
     return {
@@ -21,10 +22,9 @@ export interface Transaction {
     };
   }
   
-  // Function to create a new transaction using fetch
+  // Function to create a new transaction using the api
   export async function createTransaction(transaction: Transaction) {
     try {
-      console.log('Creating transaction:', transaction);
       
       const response = await fetch('http://localhost:3001/api/transactions/', {
         method: 'POST',
@@ -39,7 +39,11 @@ export interface Transaction {
       }
   
       const data = await response.json();
-      console.log('Transaction created:', data);
+      console.log('Transaction created:');
+      
+      // Emit an event when a transaction is created
+      io.emit("transaction-created", data.data.transaction.id);
+      
       return data.data.transaction.id; // Return the transaction ID
     } catch (error) {
       console.error('Error creating transaction:', error);
@@ -62,7 +66,10 @@ export interface Transaction {
       }
   
       const data = await response.json();
-      console.log(`Transaction ${transactionId} confirmed after 10 seconds:`, data);
+      console.log(`Transaction ${transactionId} confirmed after 10 seconds:`);
+
+      // Emit an event when a transaction is updated
+      io.emit("transaction-updated", transactionId);
     } catch (error) {
       console.error(`Error confirming transaction ${transactionId}:`, error);
     }

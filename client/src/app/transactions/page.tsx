@@ -71,7 +71,7 @@ const TransactionPage = () => {
 
   return (
     <div className="container mx-auto py-10">
-      <DataTable loading columns={columns} data={data} />
+      <DataTable loading={loading} columns={columns} data={data} />
     </div>
   );
 };

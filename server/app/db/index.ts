@@ -5,16 +5,14 @@ const POSTGRES_URL = process.env.DATABASE_URL as unknown as string;
 const sequelize = new Sequelize(POSTGRES_URL, {
     dialect: "postgres",
     logging: false,
-    host: 'postgres_db',
-    username: 'formasit',
-    password: 'password123',
-    database: 'transac_db',
+    host: process.env.PGHOST,
+    port: Number(process.env.PGPORT),
+    database: process.env.PGDATABASE,
+    username: process.env.PGUSER,
+    password: process.env.PGPASSWORD,
     dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false // Accept self-signed certificates
-      }
-    }
+       ssl: false,
+  },
   });
 
 async function connectDB() {

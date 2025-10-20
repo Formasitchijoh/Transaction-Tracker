@@ -4,6 +4,7 @@ import { DataTable } from "./data-table";
 import { API_BASE_URL } from "@/lib/api";
 import io from "socket.io-client";
 import { useState, useEffect } from "react";
+import { ToastContainer, toast } from 'react-toastify';
 
 const socket = io(API_BASE_URL, {
   withCredentials: true, // Allow cross-origin requests with credentials
@@ -19,6 +20,7 @@ export const getData = async (): Promise<Transaction[]> => {
         "Content-Type": "application/json",
       },
     });
+
 
     if (!response.ok) {
       throw new Error(
@@ -40,18 +42,19 @@ const TransactionPage = () => {
   const [data, setData] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(false)
   const [fetchTransactions, setFetchTransactions] = useState(false)
+  const setNotification = (message:string) => toast(message);
+
 
   useEffect(() => { 
     // Listen for transaction creation
-    socket.on("transaction-created", (transactionId) => {
+    socket.on("transaction-created", () => {
       setFetchTransactions(true);
-      console.log(`Transaction created: ${transactionId}`);
+      setNotification('Transaction Completed')
       
     });
     // Listen for transaction updates
-    socket.on("transaction-updated", (transactionId) => {
+    socket.on("transaction-updated", () => {
       setFetchTransactions(true);
-      console.log(`Transaction created : ${transactionId}`);
     });
 
     return () => {
@@ -70,9 +73,11 @@ const TransactionPage = () => {
   }, [fetchTransactions]);
 
   return (
-    <div className="container mx-auto py-10">
+    <>
+
+      <ToastContainer />
       <DataTable loading={loading} columns={columns} data={data} />
-    </div>
+    </>
   );
 };
 

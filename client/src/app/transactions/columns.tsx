@@ -149,7 +149,6 @@ export const columns: ColumnDef<Transaction>[] = [
             <DropdownMenuItem
               onClick={() => {
                 // navigator.clipboard.writeText(transaction.id)
-                console.log(transaction);
                 confirmTransaction(transaction.id)
               }}
             >

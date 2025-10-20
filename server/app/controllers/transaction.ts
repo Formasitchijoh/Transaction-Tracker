@@ -8,7 +8,7 @@ export const createTransactionController = async (
 ): Promise<void> => {
   try {
     const { value, timestamp, receiver, sender, confirmed } = req.body;
-    
+
     const transaction = await TransactionModel.create({
       value,
       timestamp,
@@ -37,7 +37,7 @@ export const updateTransactionController = async (
 ): Promise<any> => {
   try {
     const { transactionId } = req.params;
-    
+
     if (!transactionId) {
       return res.status(400).json({ status: "fail", message: "Transaction ID is required" });
     }
@@ -58,10 +58,10 @@ export const updateTransactionController = async (
 
     res.status(200).json({
       status: "success",
-      data: { data},
+      data: { data },
     });
     io.emit("transaction-created", transactionId);
-    
+
   } catch (error: any) {
     res.status(500).json({
       status: "error",
@@ -69,87 +69,87 @@ export const updateTransactionController = async (
     });
   }
 };
-  export const findTransactionController = async (
-    req: Request<ParamsInput>,
-    res: Response
-  ): Promise<any> => {
-    try {
-      const transaction = await TransactionModel.findByPk(req.params.transactionId);
-  
-      if (!transaction) {
-        res.status(404).json({
-          status: "fail",
-          message: "Transaction with that ID not found",
-        });
-      }
-  
-      res.status(200).json({
-        status: "success",
-        data: {
-          transaction,
-        },
-      });
-    } catch (error: any) {
-      res.status(500).json({
-        status: "error",
-        message: error.message,
+export const findTransactionController = async (
+  req: Request<ParamsInput>,
+  res: Response
+): Promise<any> => {
+  try {
+    const transaction = await TransactionModel.findByPk(req.params.transactionId);
+
+    if (!transaction) {
+      res.status(404).json({
+        status: "fail",
+        message: "Transaction with that ID not found",
       });
     }
-  };
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        transaction,
+      },
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};
 
 
-  export const findAllTransactionsController = async (
-    req: Request<{}, {}, {}, FilterQueryInput>,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
-    try {
-      const page = req.query.page || 1;
-      const limit = req.query.limit || 100;
-      const offset = (page - 1) * limit;
-  
-      const transactions = await TransactionModel.findAll({
-        limit,
-        offset,
-        order: [['createdAt', 'DESC']], // Order by the 'createdAt' field in descending order
-      });
-  
-      res.status(200).json({
-        status: "success",
-        results: transactions.length,
-        transactions,
-      });
-    } catch (error: any) {
-      res.status(500).json({
-        status: "error",
-        message: error.message,
-      });
-    }
-  };
-  
-  export const deleteTransactionController = async (
-    req: Request<ParamsInput>,
-    res: Response
-  ): Promise<any> => {
-    try {
-      const result = await TransactionModel.destroy({
-        where: { id: req.params.transactionId },
-        force: true, // Permanently delete from the database
-      });
-  
-      if (result === 0) {
-        res.status(404).json({
-          status: "fail",
-          message: "Transaction with that ID not found",
-        });
-      }
-  
-      res.status(204).send(); // No content response
-      io.emit("transaction-updated", req.params.transactionId );
-    } catch (error: any) {
-      res.status(500).json({
-        status: "error",
-        message: error.message,
+export const findAllTransactionsController = async (
+  req: Request<{}, {}, {}, FilterQueryInput>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 100;
+    const offset = (page - 1) * limit;
+
+    const transactions = await TransactionModel.findAll({
+      limit,
+      offset,
+      order: [['createdAt', 'DESC']], // Order by the 'createdAt' field in descending order
+    });
+
+    res.status(200).json({
+      status: "success",
+      results: transactions.length,
+      transactions,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};
+
+export const deleteTransactionController = async (
+  req: Request<ParamsInput>,
+  res: Response
+): Promise<any> => {
+  try {
+    const result = await TransactionModel.destroy({
+      where: { id: req.params.transactionId },
+      force: true, // Permanently delete from the database
+    });
+
+    if (result === 0) {
+      res.status(404).json({
+        status: "fail",
+        message: "Transaction with that ID not found",
       });
     }
-  };
+
+    res.status(204).send(); // No content response
+    io.emit("transaction-updated", req.params.transactionId);
+  } catch (error: any) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};

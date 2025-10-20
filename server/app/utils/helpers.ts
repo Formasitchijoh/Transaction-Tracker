@@ -1,4 +1,6 @@
 import { io } from "./socket";
+import { faker } from '@faker-js/faker';
+
 export interface Transaction {
     value: number;
     timestamp: number;
@@ -10,14 +12,14 @@ export interface Transaction {
   // Function to generate random transaction data
   export function generateRandomTransaction(): Transaction {
     const values = ['completed', 'pending', 'failed'];
-    const randomValue = Math.floor(Math.random() * 10000); // Random value between 0 and 10000
+    const randomValue = Math.floor(Math.random() * 100000); // Random value between 0 and 10000
     const randomStatus = values[Math.floor(Math.random() * values.length)];
   
     return {
       value: randomValue,
       timestamp: Date.now(),
-      receiver: `Receiver ${Math.floor(Math.random() * 100)}`, // Random receiver name
-      sender: `Sender ${Math.floor(Math.random() * 100)}`,   // Random sender name
+      receiver: faker.person.fullName(), // Random receiver name
+      sender: faker.person.fullName(),   // Random sender name
       confirmed: randomStatus === 'completed' ? true : false,
     };
   }

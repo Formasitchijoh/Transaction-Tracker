@@ -10,14 +10,14 @@ const PORT = process.env.PORT || 8000;
 
 export const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:3000", "https://transaction-tracker-liard.vercel.app"], // Removed the trailing slash
+    origin: ["http://127.0.0.1:3000", "https://transaction-tracker-liard.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE", 'PATCH'],
   },
 });
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://transaction-tracker-liard.vercel.app"], // Removed the trailing slash
+    origin: ["http://127.0.0.1:3000", "https://transaction-tracker-liard.vercel.app"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", 'PATCH'],
   })

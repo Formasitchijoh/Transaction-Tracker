@@ -1,5 +1,9 @@
 # Tracky - Transaction Tracking System
 
+<img width="1920" height="1035" alt="Screenshot (96)" src="https://github.com/user-attachments/assets/1f3f547e-4d71-441f-a871-c49c4d92897a" />
+
+
+
 Tracky is a transaction tracking system composed of three core components:
 
 1. **Scheduler** – Generates random transaction data every minute and communicates with the REST API to store these transactions. After a transaction is stored, the Scheduler updates its confirmed status 10 seconds later.
@@ -54,17 +58,7 @@ The local server is found at http://localhost:3001/api/transactions
 ```sh
 cd transactify/client
 npm run dev  # or yarn dev, pnpm dev
-The local server is found at http://localhost:3000
-```
-
-### 🔹 Running with Docker
-
-#### Build the Docker Containers and Start in Detached Mode
-
-```sh
-docker-compose up -d
-docker-compose up --build
-
+The local server is found at http://127.0.0.1:3000
 ```
 
 ### 📖 Accessing the Swagger Documentation
